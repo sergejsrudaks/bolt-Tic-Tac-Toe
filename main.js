@@ -1,8 +1,14 @@
 const cells = document.querySelectorAll('.cell');
     const resetButton = document.getElementById('reset');
+    const currentPlayerDisplay = document.getElementById('current-player');
+    const xScoreDisplay = document.getElementById('x-score');
+    const oScoreDisplay = document.getElementById('o-score');
+
     let currentPlayer = 'X';
     let board = ['', '', '', '', '', '', '', '', ''];
     let gameActive = true;
+    let xScore = 0;
+    let oScore = 0;
 
     const winningConditions = [
       [0, 1, 2],
@@ -50,6 +56,16 @@ const cells = document.querySelectorAll('.cell');
       if (roundWon) {
         alert(`Player ${currentPlayer} has won!`);
         gameActive = false;
+
+        // Update scores
+        if (currentPlayer === 'X') {
+          xScore++;
+          xScoreDisplay.textContent = xScore;
+        } else {
+          oScore++;
+          oScoreDisplay.textContent = oScore;
+        }
+
         return;
       }
 
@@ -61,6 +77,7 @@ const cells = document.querySelectorAll('.cell');
       }
 
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      currentPlayerDisplay.textContent = currentPlayer;
     }
 
     function resetBoard() {
@@ -69,6 +86,7 @@ const cells = document.querySelectorAll('.cell');
       gameActive = true;
 
       cells.forEach(cell => cell.textContent = '');
+      currentPlayerDisplay.textContent = currentPlayer;
     }
 
     cells.forEach(cell => cell.addEventListener('click', handleCellClick));
